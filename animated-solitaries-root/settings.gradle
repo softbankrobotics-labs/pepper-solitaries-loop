@@ -1,0 +1,2 @@
+include ':sample-app', ':solitaries-loop'
+rootProject.name='Solitaries Loop'
