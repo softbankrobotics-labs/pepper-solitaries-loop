@@ -1,4 +1,4 @@
-# Animated Solitaries Library
+# Pepper Solitaries Loop Library
 
 This Android Library allows you to create a solitaries animations loop. A solitary animation is an animation that the robot 
 runs when it's alone to attract people.
@@ -7,7 +7,7 @@ With this library, you can also define at which frequency you want the animation
 to 60 seconds. **We advise you to not set this value below 30 seconds** or it may result in complains about robot being noisy 
 and impossible to reach.
 
-The solitaries animation loop can then be started and stopped whenever you want.
+The solitaries animations loop can then be started and stopped whenever you want.
 
 ## Getting Started
 
@@ -41,21 +41,21 @@ Initialise the QiSDK in the onCreate. If you are unsure how to do this, refer to
 ```
 QiSDK.register(this, this)
 ```
-In the `onRobotFocusGained`, instantiate a `AnimatedSolitary` object by passing it the QiContext and start the loop:
+In the `onRobotFocusGained`, instantiate a `SolitariesLoop` object by passing it the QiContext and start the loop:
 ```
-animatedSolitary = AnimatedSolitary(qiContext)
+solitariesLoop = SolitariesLoop(qiContext)
 ```
 You can also define the frequency at which you want the animations to run (time in seconds):
 ```
-animatedSolitary = AnimatedSolitary(qiContext, 40)
+solitariesLoop = SolitariesLoop(qiContext, 40)
 ```
 Start the solitaries loop whenever you want (for instance if no human has been detected around the robot for X minutes):
 ```
-animatedSolitary.start()
+solitariesLoop.start()
 ```
 Stop the solitaries loop whenever you want (for instance if a human is engaged or if you loose the robot focus):
 ```
-animatedSolitary.stop()
+solitariesLoop.stop()
 ```
 
 
