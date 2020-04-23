@@ -63,7 +63,7 @@ class SolitariesLoop(private val qiContext: QiContext, private val delayInSecond
                 animate.async().run()
             }
             .thenCompose {
-                if (it.isCancelled) {
+                if (!it.isCancelled) {
                     buildAndRunAnimate()
                 } else {
                     FutureUtils.wait(0, TimeUnit.NANOSECONDS)
