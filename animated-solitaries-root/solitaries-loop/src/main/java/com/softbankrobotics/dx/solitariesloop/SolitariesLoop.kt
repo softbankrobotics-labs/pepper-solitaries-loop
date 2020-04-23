@@ -1,5 +1,6 @@
 package com.softbankrobotics.dx.solitariesloop
 
+import android.util.Log
 import com.aldebaran.qi.Future
 import com.aldebaran.qi.sdk.QiContext
 import com.aldebaran.qi.sdk.builder.AnimateBuilder
@@ -13,6 +14,10 @@ import java.util.concurrent.TimeUnit
  * @property delayInSeconds The time between animations, in seconds.
  */
 class SolitariesLoop(private val qiContext: QiContext, private val delayInSeconds: Int = 60) {
+
+    companion object {
+        private const val TAG = "SolitariesLoop"
+    }
 
     private val animationNames = arrayOf(
         "CheckLeft_01.qianim",
@@ -39,7 +44,7 @@ class SolitariesLoop(private val qiContext: QiContext, private val delayInSecond
     private var animationNamesQueue = mutableListOf<String>()
     private var lastAnimationName = ""
 
-    private lateinit var animationFuture: Future<Void>
+    private var animationFuture: Future<Void>? = null
 
     private fun buildAndRunAnimate(): Future<Void> {
         return FutureUtils.wait(delayInSeconds.toLong(), TimeUnit.SECONDS)
@@ -58,7 +63,7 @@ class SolitariesLoop(private val qiContext: QiContext, private val delayInSecond
                 animate.async().run()
             }
             .thenCompose {
-                if (it.isCancelled) {
+                if (!it.isCancelled) {
                     buildAndRunAnimate()
                 } else {
                     FutureUtils.wait(0, TimeUnit.NANOSECONDS)
@@ -87,6 +92,7 @@ class SolitariesLoop(private val qiContext: QiContext, private val delayInSecond
      * Starts periodically playing random animations, until stopped.
      */
     fun start() {
+        Log.i(TAG, "SolitariesLoop starting")
         animationFuture = buildAndRunAnimate()
     }
 
@@ -94,8 +100,13 @@ class SolitariesLoop(private val qiContext: QiContext, private val delayInSecond
      * Stops the loop and cancels the current animation (if any); returns a future (that will finish
      * when the animation has effectively been stopped.
      */
-    fun stop(): Future<Void> {
-        animationFuture.requestCancellation()
+    fun stop(): Future<Void>? {
+        Log.i(TAG, "SolitariesLoop stopping")
+        if (animationFuture == null || animationFuture!!.isDone) {
+            Log.e(TAG, "Error: trying to stop a SolitariesLoop that hasn't been started")
+        } else {
+            animationFuture!!.requestCancellation()
+        }
         return animationFuture
     }
 }
