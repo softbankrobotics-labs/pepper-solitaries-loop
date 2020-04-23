@@ -92,6 +92,7 @@ class SolitariesLoop(private val qiContext: QiContext, private val delayInSecond
      * Starts periodically playing random animations, until stopped.
      */
     fun start() {
+        Log.i(TAG, "SolitariesLoop starting")
         animationFuture = buildAndRunAnimate()
     }
 
@@ -100,6 +101,7 @@ class SolitariesLoop(private val qiContext: QiContext, private val delayInSecond
      * when the animation has effectively been stopped.
      */
     fun stop(): Future<Void>? {
+        Log.i(TAG, "SolitariesLoop stopping")
         if (animationFuture == null || animationFuture!!.isDone) {
             Log.e(TAG, "Error: trying to stop a SolitariesLoop that hasn't been started")
         } else {
