@@ -37,7 +37,7 @@ Make sure to replace 'Tag' by the number of the version of the library you want 
 
 *This README assumes some standard setup can be done by the user, such as initialising variables or implementing code in the correct functions. Refer to the Sample Project for full usage code.*
 
-Initialise the QiSDK in the onCreate. If you are unsure how to do this, refer to the QiSDK tutorials [here](https://qisdk.softbankrobotics.com/sdk/doc/pepper-sdk/ch1_gettingstarted/starting_project.html)
+Initialise the QiSDK in the onCreate. If you are unsure how to do this, refer to the [QiSDK tutorials](https://developer.softbankrobotics.com/pepper-qisdk/getting-started/creating-robot-application)
 ```
 QiSDK.register(this, this)
 ```
